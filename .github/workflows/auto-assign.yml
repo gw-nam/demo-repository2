@@ -17,10 +17,14 @@ jobs:
         with:
           script: |
             const author = context.payload.pull_request.user.login;
-            let reviewers = ['poohsla'];
-
+            let reviewers = ['poohsla','jinhwankim6557', 'k3255'];
+            
             if (reviewers.includes(author)) {
-              reviewers = reviewers.map(reviewer => reviewer === author ? 'jinhwankim6557' : reviewer);
+              if(reviewers.length === 1)
+                  reviewers = reviewers.map(reviewer => reviewer === author ? 'jinhwankim6557' : reviewer);
+              else {
+                  reviewers = reviewers.filter(reviewer => reviewer !== author);
+              }
             }
 
             await github.rest.pulls.requestReviewers({
